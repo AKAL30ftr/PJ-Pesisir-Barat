@@ -77,49 +77,9 @@
 
     <!-- MAIN CONTENT -->
     <main>
-        <div class="detail-container">
-            <!-- Hero Image -->
-            <img src="assets/pulau-pisang.png" alt="Pulau Pisang Main" class="detail-hero-img" />
-            
-            <!-- Title -->
-            <div class="detail-title">Pulau Pisang</div>
-            <div style="font-weight: 500; font-size: 16px; margin-bottom: 20px;">
-                Sebuah Harta Tersembunyi di Lampung, Si Cantik yang Memikat dengan Keindahan Pantainya
-            </div>
-
-            <!-- Desc -->
-            <div class="detail-desc">
-                Pulau Pisang memikat dengan hamparan pasir putih yang bersih, laut berwarna hijau-toska, serta deretan pohon kelapa yang menari di tepi pantai—seolah mengundang kamu untuk berhenti sejenak dari keramaian kota.
-                <br><br>
-                Terumbu karang dan kehidupan lautnya masih cukup alami, menjadikannya pilihan bagus untuk snorkeling atau hanya sekadar menikmati pemandangan laut yang tenang.
-            </div>
-
-            <!-- Gallery -->
-            <div class="detail-gallery">
-                <img src="assets/pulau-pisang.png" alt="View 1" />
-                <!-- Placeholder image for second view -->
-                <img src="assets/img/hero.png" alt="View 2" />
-            </div>
-
-            <!-- Info Section -->
-            <div class="detail-info">
-                <h3>Berapa sih estimasi liburan ke Pulau Pisang?</h3>
-                <p>Nggak harus mahal kok — asal pinter atur transport dan penginapan. Nih kira-kira rinciannya:</p>
-                <ul>
-                    <li>Transport ke dermaga Krui: dari Bandar Lampung sekitar Rp150-250 ribu (bus/minivan 6-7 jam).</li>
-                    <li>Kapal ke pulau: sewa kapal bareng rombongan ±Rp250 ribu per kapal, atau patungan sekitar Rp50 ribu per orang.</li>
-                    <li>Penginapan: homestay lokal mulai Rp150-300 ribu per malam.</li>
-                    <li>Makan & sewa motor: total harian kira-kira Rp100-150 ribu.</li>
-                </ul>
-                <br>
-                <p><strong>Total estimasi 2 hari 1 malam:</strong> sekitar Rp500 ribu - Rp1 juta per orang (kalau rame-rame bisa lebih hemat).</p>
-                <p><strong>Untuk info lebih lengkap:</strong></p>
-                <br>
-                <p>Kontak:<br>Instagram: @aerotravelindonesia<br>Whatsapp: +6281324641414</p>
-                <br>
-                <p>Lokasi: https://maps.app.goo.gl/FxXCpg6qUCmC13UL8</p>
-            </div>
-
+        <div class="detail-container" id="wisataDetail">
+            <!-- Content will be loaded dynamically -->
+            <p>Loading...</p>
         </div>
     </main>
 
@@ -206,17 +166,103 @@
       </div>
     </footer>
 
-    <script>
-      document.getElementById("year").textContent = new Date().getFullYear();
-    </script>
-
-    <!-- Scripts -->
     <script src="script.js"></script>
     <script>
-      // HAMBURGER MENU TOGGLE
+      document.addEventListener('DOMContentLoaded', async function() {
+        const id = getUrlParam('id');
+        if (!id) {
+          document.getElementById('wisataDetail').innerHTML = '<p>ID wisata tidak ditemukan.</p>';
+          return;
+        }
+
+        const wisata = await DataManager.getById('wisata', id);
+        if (!wisata) {
+          document.getElementById('wisataDetail').innerHTML = '<p>Wisata tidak ditemukan.</p>';
+          return;
+        }
+
+        // Build cost list HTML
+        let costHtml = '';
+        if (wisata.estimasiBiaya) {
+          costHtml = '<ul>';
+          for (const [key, value] of Object.entries(wisata.estimasiBiaya)) {
+            if (key !== 'total') {
+              costHtml += `<li><strong>${key}:</strong> ${value}</li>`;
+            }
+          }
+          costHtml += '</ul>';
+          if (wisata.estimasiBiaya.total) {
+            costHtml += `<p><strong>Total estimasi:</strong> ${wisata.estimasiBiaya.total}</p>`;
+          }
+        }
+
+        // Build small slidable gallery
+        const allImages = [wisata.gambarHero, ...(wisata.galeri || [])].filter(Boolean);
+        let galleryHtml = '';
+        if (allImages.length > 0) {
+          galleryHtml = `
+            <div class="gallery-section" style="margin: 30px 0;">
+              <h3 style="margin-bottom: 15px; color: #0c4a6e;">Galeri</h3>
+              <div class="gallery-wrapper" style="position: relative;">
+                <div class="gallery-track" id="galleryTrack" style="display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; gap: 10px; padding: 10px 0;">
+                  ${allImages.map((img, i) => `
+                    <div class="gallery-thumb" style="flex: 0 0 150px; scroll-snap-align: start; cursor: pointer;" onclick="window.gallery && window.gallery.open(${JSON.stringify(allImages)}, ${i})">
+                      <img src="${img}" alt="Gallery ${i+1}" style="width: 150px; height: 100px; object-fit: cover; border-radius: 8px; border: 2px solid #0c4a6e;" />
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+              <p style="text-align: center; font-size: 12px; color: #888; margin-top: 10px;">Klik gambar untuk memperbesar</p>
+            </div>
+          `;
+        }
+
+        // Render content - cleaner layout like original
+        document.getElementById('wisataDetail').innerHTML = `
+          <img src="${wisata.gambarHero}" alt="${wisata.nama}" class="detail-hero-img" style="width: 100%; max-height: 400px; object-fit: cover; border-radius: 12px; margin-bottom: 20px;" />
+          
+          <div class="detail-title" style="font-size: 28px; font-weight: bold; color: #0c4a6e; text-align: center; margin-bottom: 10px;">${wisata.nama}</div>
+          
+          <div class="detail-ringkasan" style="font-style: italic; text-align: center; color: #555; margin-bottom: 25px; font-size: 16px;">
+            ${wisata.ringkasan}
+          </div>
+
+          <div class="detail-desc" style="line-height: 1.8; margin-bottom: 30px;">
+            ${wisata.deskripsi.replace(/\n\n/g, '</p><p style="margin-bottom: 15px;">')}
+          </div>
+
+          ${galleryHtml}
+
+          <div class="detail-info" style="background: #f9f9f9; padding: 20px; border-radius: 12px; margin-top: 20px;">
+            <h3 style="color: #0c4a6e; margin-bottom: 15px;">Estimasi Biaya</h3>
+            ${costHtml}
+            
+            <h3 style="color: #0c4a6e; margin-top: 25px; margin-bottom: 15px;">Kontak</h3>
+            <p style="margin-bottom: 8px;">
+              <img src="assets/instagram.png" alt="" style="width:20px; vertical-align:middle; margin-right:8px" />
+              ${wisata.kontak?.instagram || '-'}
+            </p>
+            <p style="margin-bottom: 8px;">
+              <img src="assets/icons/wa.png" alt="" style="width:20px; vertical-align:middle; margin-right:8px" />
+              ${wisata.kontak?.whatsapp || '-'}
+            </p>
+            
+            <h3 style="color: #0c4a6e; margin-top: 25px; margin-bottom: 15px;">Lokasi</h3>
+            <p>
+              <a href="${wisata.lokasi}" target="_blank" style="display: inline-block; background: #0c4a6e; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none;">
+                📍 Buka di Google Maps
+              </a>
+            </p>
+          </div>
+        `;
+
+        // Update page title
+        document.title = `${wisata.nama} - Pesisir Barat`;
+      });
+
+      // Hamburger menu
       const hamburger = document.getElementById("hamburgerBtn");
       const mainNav = document.querySelector(".main-nav");
-
       if (hamburger && mainNav) {
         hamburger.addEventListener("click", () => {
           mainNav.classList.toggle("open");

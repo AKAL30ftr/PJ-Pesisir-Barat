@@ -13,31 +13,7 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="pariwisata-sub.css" />
-
-    <style>
-        /* Custom styles for content inside the parchment */
-        .content-boxes {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            align-items: center;
-        }
-        .box {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .box img {
-            width: 100%;
-            max-width: 300px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-        }
-        .box-desc {
-            margin-top: 10px;
-            font-weight: 600;
-        }
-    </style>
-
+    
     <!-- meta for theme-color -->
     <meta name="theme-color" content="#e9caa2" />
   </head>
@@ -101,40 +77,13 @@
 
     <!-- MAIN CONTENT -->
     <main>
-      <div class="main-content">
-        <!-- HEADER berada di area background pink -->
-        <div class="content-header header-top">
-          <img src="assets/ikan.png" alt="Logo Ikan" class="logo-ikan" />
-          <span class="divider">|</span>
-          <h2 class="section-title">Wisata Kuliner</h2>
-        </div>
-        <section class="content" aria-label="Deskripsi Wisata Kuliner">
-            <div class="content-boxes">
-              <div class="box">
-                <img src="assets/gabing.png" alt="Gabing" />
-                <p class="box-desc">
-                  Gabing, Sensasi Gurih dari Batang Kelapa Muda. Kelihatannya sederhana,
-                  namun teksturnya renyah lembut dengan aroma khas
-                </p>
-              </div>
-        
-              <div class="box">
-                <img src="assets/tempoyak.png" alt="Tempoyak" />
-                <p class="box-desc">
-                  Tempoyak, Fermentasi Durian yang Bikin Lidah Bergoyang. Sekali Cocok Susah Buat Move On
-                </p>
-              </div>
-        
-              <div class="box">
-                <img src="assets/seruit.png" alt="Seruit" />
-                <p class="box-desc">
-                  Seruit, Lambang Kebersamaan di Setiap Suapan Ikan bakar, sambal
-                  terasi, potongan mangga muda yang dicampur jadi satu—itulah Seruit
-                </p>
-              </div>
+        <div class="container" style="margin-top: 40px;">
+            <h1 class="page-title" style="text-align: center; color: #0c4a6e;">WISATA KULINER</h1>
+            <div class="wisata-list-container" id="wisataList">
+                <!-- Cards will be loaded dynamically -->
+                <p>Loading...</p>
             </div>
-        </section>
-      </div>
+        </div>
     </main>
 
     <!-- FOOTER -->
@@ -151,15 +100,15 @@
 
           <div class="footer-address">
             <p>
-              <img src="assets/map.png" />
+              <img src="assets/icons/map.png" />
               Jl. Kesuma No. 1 Gedung A Lt.1 Kompleks Perkantoran Pemda, Kec.
               Pesisir Tengah
             </p>
             <p>Kabupaten Pesisir Barat, Provinsi Lampung – Indonesia 34874</p>
 
-            <p><img src="assets/wa.png" alt="" /> +62 853-6998-9990</p>
+            <p><img src="assets/icons/wa.png" alt="" /> +62 853-6998-9990</p>
             <p>
-              <img src="assets/email.png" style="width: 25px" alt="" />
+              <img src="assets/icons/email.png" style="width: 25px" alt="" />
               admin@pesisirbaratkab.go.id
             </p>
           </div>
@@ -177,29 +126,29 @@
           </div>
 
           <p class="link-website">
-            <img src="assets/web.png" alt="" /> https://pesisirbaratkab.go.id
+            <img src="assets/icons/web.png" alt="" /> https://pesisirbaratkab.go.id
           </p>
 
           <h3 class="footer-heading">STATISTIK PENGUNJUNG</h3>
 
           <div class="visitor-stats">
             <div>
-              <img src="assets/group.png" alt="" />
+              <img src="assets/icons/group.png" alt="" />
               <p>Total</p>
               <span>31,339</span>
             </div>
             <div>
-              <img src="assets/eye.png" alt="" />
+              <img src="assets/icons/eye.png" alt="" />
               <p>Hari Ini</p>
               <span>79</span>
             </div>
             <div>
-              <img src="assets/calender.png" alt="" />
+              <img src="assets/icons/calender.png" alt="" />
               <p>Bulan Ini</p>
               <span>405</span>
             </div>
             <div>
-              <img src="assets/calender-solid.png" alt="" />
+              <img src="assets/icons/calender-solid.png" alt="" />
               <p>Tahun Ini</p>
               <span>55,668</span>
             </div>
@@ -220,17 +169,32 @@
       </div>
     </footer>
 
-    <script>
-      document.getElementById("year").textContent = new Date().getFullYear();
-    </script>
-
-    <!-- Scripts -->
     <script src="script.js"></script>
     <script>
-      // HAMBURGER MENU TOGGLE
+      document.addEventListener('DOMContentLoaded', async function() {
+        // Load wisata kuliner only
+        const allWisata = await DataManager.load('wisata');
+        const wisataKuliner = allWisata.filter(w => w.kategori === 'wisata-kuliner');
+        
+        const container = document.getElementById('wisataList');
+        if (container && wisataKuliner.length > 0) {
+          container.innerHTML = wisataKuliner.map(w => `
+            <a href="detail-wisata.html?id=${w.id}" style="text-decoration: none; color: inherit; display: block; width: 100%;">
+              <div class="wisata-card">
+                <img src="${w.gambarHero}" alt="${w.nama}" />
+                <h3 class="wisata-card-title">${w.nama}</h3>
+                <div class="wisata-card-desc">${w.ringkasan}</div>
+              </div>
+            </a>
+          `).join('');
+        } else if (container) {
+          container.innerHTML = '<p>Belum ada data wisata kuliner.</p>';
+        }
+      });
+
+      // Hamburger menu
       const hamburger = document.getElementById("hamburgerBtn");
       const mainNav = document.querySelector(".main-nav");
-
       if (hamburger && mainNav) {
         hamburger.addEventListener("click", () => {
           mainNav.classList.toggle("open");
@@ -239,3 +203,4 @@
     </script>
   </body>
 </html>
+

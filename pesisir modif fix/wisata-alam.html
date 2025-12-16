@@ -77,46 +77,12 @@
 
     <!-- MAIN CONTENT -->
     <main>
-        <!-- Gunakan container biasa, bukan layout 'parchment/main-content' karena design baru lebih clean -->
-        <!-- Namun kita tetap butuh wrapper agar tidak nempel pinggir -->
         <div class="container" style="margin-top: 40px;">
-            
-            <div class="wisata-list-container">
-                
-                <!-- Card 1: Pulau Pisang (Link to Detail) -->
-                <a href="detail-wisata.html" style="text-decoration: none; color: inherit; display: block; width: 100%;">
-                    <div class="wisata-card">
-                        <img src="assets/pulau-pisang.png" alt="Pulau Pisang" />
-                        <div class="wisata-card-desc">
-                            Gelombang laut Pesisir Barat menyimpan kisah konservasi penyu yang terus hidup di Muara Tembulih. Setiap tukik yang dilepas jadi simbol harapan baru bagi ekosistem pesisir.
-                            <!-- (Note: Text di atas copy dari screenshot user untuk 'Penyu', tapi gambar pulau pisang. Saya sesuaikan) -->
-                            <!-- Karena user minta pulau pisang di detail, saya ganti text sesuai context pulau pisang jika perlu, tapi user bilang "isi konntent belakangan". Saya pakai placeholder text yang relevan sedikit. -->
-                            <br><br>
-                            Pulau Pisang, sebuah harta tersembunyi dengan pasir putih dan kehidupan laut yang memukau.
-                        </div>
-                    </div>
-                </a>
-
-                <!-- Card 2: River Tubing -->
-                <div class="wisata-card">
-                    <img src="assets/airterjun.png" alt="River Tubing" /> <!-- Placeholder img -->
-                    <h3 class="wisata-card-title">RIVER TUBING</h3>
-                    <div style="font-size: 14px; letter-spacing: 2px; text-transform: uppercase;">JELAJAH WAY TENUMBANG</div>
-                    <div class="wisata-card-desc" style="margin-top: 15px;">
-                        Bumi Lebu menawarkan pengalaman desa yang tetap setia pada tradisi di tengah perubahan zaman. Pengunjung diajak menyelami kerajinan, budaya, dan kehangatan komunitas lokal.
-                    </div>
-                </div>
-
-                <!-- Card 3: Repong Damar -->
-                <div class="wisata-card">
-                    <img src="assets/bukitbarisan.png" alt="Repong Damar" /> <!-- Placeholder img -->
-                    <div class="wisata-card-desc">
-                        Repong damar manghadirkan potret hutan adat yang diwariskan lintas generasi. Di sanalah harmonisasi antara manusia dan alam terlihat paling nyata.
-                    </div>
-                </div>
-
+            <h1 class="page-title" style="text-align: center; color: #0c4a6e;">WISATA ALAM</h1>
+            <div class="wisata-list-container" id="wisataList">
+                <!-- Cards will be loaded dynamically -->
+                <p>Loading...</p>
             </div>
-
         </div>
     </main>
 
@@ -203,17 +169,32 @@
       </div>
     </footer>
 
-    <script>
-      document.getElementById("year").textContent = new Date().getFullYear();
-    </script>
-
-    <!-- Scripts -->
     <script src="script.js"></script>
     <script>
-      // HAMBURGER MENU TOGGLE
+      document.addEventListener('DOMContentLoaded', async function() {
+        // Load wisata alam only
+        const allWisata = await DataManager.load('wisata');
+        const wisataAlam = allWisata.filter(w => w.kategori === 'wisata-alam');
+        
+        const container = document.getElementById('wisataList');
+        if (container && wisataAlam.length > 0) {
+          container.innerHTML = wisataAlam.map(w => `
+            <a href="detail-wisata.html?id=${w.id}" style="text-decoration: none; color: inherit; display: block; width: 100%;">
+              <div class="wisata-card">
+                <img src="${w.gambarHero}" alt="${w.nama}" />
+                <h3 class="wisata-card-title">${w.nama}</h3>
+                <div class="wisata-card-desc">${w.ringkasan}</div>
+              </div>
+            </a>
+          `).join('');
+        } else if (container) {
+          container.innerHTML = '<p>Belum ada data wisata alam.</p>';
+        }
+      });
+
+      // Hamburger menu
       const hamburger = document.getElementById("hamburgerBtn");
       const mainNav = document.querySelector(".main-nav");
-
       if (hamburger && mainNav) {
         hamburger.addEventListener("click", () => {
           mainNav.classList.toggle("open");
