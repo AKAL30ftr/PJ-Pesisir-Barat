@@ -535,3 +535,66 @@ window.Search = Search;
 window.getUrlParam = getUrlParam;
 window.formatDate = formatDate;
 window.formatDateLong = formatDateLong;
+
+// =============================================================================
+// NAV ACTIVE STATE - Auto-detect current page
+// =============================================================================
+function setActiveNav() {
+  const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+  const navItems = document.querySelectorAll('.main-nav .nav-item');
+  
+  // Map of pages to their parent nav category
+  const pageToNav = {
+    'index.html': 'beranda',
+    'profil.html': 'profil',
+    'sejarah.html': 'profil',
+    'lambang.html': 'profil', 
+    'pemerintahan.html': 'profil',
+    'profil_bupati.html': 'profil',
+    'profil_wabup.html': 'profil',
+    'visi-misi.html': 'profil',
+    'pariwisata.html': 'pariwisata',
+    'wisata-alam.html': 'pariwisata',
+    'wisata-budaya.html': 'pariwisata',
+    'wisata-kuliner.html': 'pariwisata',
+    'detail-wisata.html': 'pariwisata',
+    'berita.html': 'beranda',
+    'informasi.html': 'beranda',
+    'event.html': 'beranda',
+  };
+  
+  const activeCategory = pageToNav[currentPage];
+  
+  navItems.forEach(item => {
+    const itemText = item.textContent.trim().toLowerCase();
+    const isDropdown = item.classList.contains('dropdown');
+    
+    if (isDropdown) {
+      const btn = item.querySelector('.dropbtn');
+      if (btn && btn.textContent.toLowerCase().includes(activeCategory)) {
+        item.classList.add('active');
+      }
+    } else if (itemText.includes(activeCategory)) {
+      item.classList.add('active');
+    }
+  });
+}
+
+// =============================================================================
+// BREADCRUMB - Move inside header for absolute positioning
+// =============================================================================
+function moveBreadcrumbToHeader() {
+  const breadcrumb = document.querySelector('.breadcrumb');
+  const header = document.querySelector('header.hero');
+  
+  if (breadcrumb && header) {
+    // Move breadcrumb to be last child of header (before closing </header>)
+    header.appendChild(breadcrumb);
+  }
+}
+
+// Auto-init on page load
+document.addEventListener('DOMContentLoaded', function() {
+  setActiveNav();
+  moveBreadcrumbToHeader();
+});

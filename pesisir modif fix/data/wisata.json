@@ -155,5 +155,77 @@
       "whatsapp": "+6281234567890"
     },
     "lokasi": "https://maps.app.goo.gl/example-seruit"
+  },
+  {
+    "id": "tari-cangget",
+    "nama": "Tari Cangget",
+    "kategori": "wisata-budaya",
+    "ringkasan": "Tarian Tradisional Sakral Masyarakat Lampung",
+    "deskripsi": "Tari Cangget adalah tarian tradisional sakral masyarakat Lampung yang ditampilkan dalam upacara adat dan penyambutan tamu kehormatan. Tarian ini menampilkan gerakan-gerakan anggun yang melambangkan keanggunan dan keramahan masyarakat Pesisir Barat.",
+    "gambarHero": "assets/wisata/bukitbarisan.png",
+    "galeri": [],
+    "estimasiBiaya": {
+      "tiketMasuk": "Gratis (saat acara adat)",
+      "total": "Gratis"
+    },
+    "kontak": {
+      "instagram": "@budayapesbar",
+      "whatsapp": "+6281234567890"
+    },
+    "lokasi": "https://maps.app.goo.gl/example-cangget"
+  },
+  {
+    "id": "rumah-adat-lamban-tuha",
+    "nama": "Rumah Adat Lamban Tuha",
+    "kategori": "wisata-budaya",
+    "ringkasan": "Warisan Arsitektur Khas Lampung Pesisir",
+    "deskripsi": "Lamban Tuha adalah rumah adat tradisional masyarakat Lampung Pesisir. Bangunan panggung dengan ukiran khas ini menjadi simbol kebudayaan dan sejarah masyarakat Pesisir Barat yang masih dilestarikan hingga saat ini.",
+    "gambarHero": "assets/wisata/pulau-pisang.png",
+    "galeri": [],
+    "estimasiBiaya": {
+      "tiketMasuk": "Rp5.000 - Rp10.000",
+      "total": "Rp5.000 - Rp10.000"
+    },
+    "kontak": {
+      "instagram": "@budayapesbar",
+      "whatsapp": "+6281234567890"
+    },
+    "lokasi": "https://maps.app.goo.gl/example-lamban"
+  },
+  {
+    "id": "festival-sekura",
+    "nama": "Festival Sekura",
+    "kategori": "wisata-budaya",
+    "ringkasan": "Pesta Topeng Tradisional Pasca Lebaran",
+    "deskripsi": "Festival Sekura adalah tradisi unik masyarakat Lampung Barat yang dilaksanakan setelah Hari Raya Idul Fitri. Peserta menggunakan topeng dan kostum unik sambil berkeliling kampung, menciptakan suasana meriah dan penuh keceriaan.",
+    "gambarHero": "assets/wisata/gabing.png",
+    "galeri": [],
+    "estimasiBiaya": {
+      "tiketMasuk": "Gratis",
+      "total": "Gratis"
+    },
+    "kontak": {
+      "instagram": "@festivalsekura",
+      "whatsapp": "+6281234567890"
+    },
+    "lokasi": "https://maps.app.goo.gl/example-sekura"
+  },
+  {
+    "id": "gulai-taboh",
+    "nama": "Gulai Taboh",
+    "kategori": "wisata-kuliner",
+    "ringkasan": "Gulai Khas Lampung dengan Cita Rasa Unik",
+    "deskripsi": "Gulai Taboh adalah masakan khas Lampung yang terbuat dari rebung (tunas bambu) yang dimasak dengan santan dan bumbu rempah khas. Rasanya gurih dengan tekstur unik dari rebung yang renyah.",
+    "gambarHero": "assets/wisata/tempoyak.png",
+    "galeri": [],
+    "estimasiBiaya": {
+      "porsi": "Rp20.000 - Rp35.000",
+      "total": "Rp20.000 - Rp35.000"
+    },
+    "kontak": {
+      "instagram": "@kulinerpesbar",
+      "whatsapp": "+6281234567890"
+    },
+    "lokasi": "https://maps.app.goo.gl/example-gulai"
   }
 ]
