@@ -548,57 +548,178 @@
     margin: 0 !important;
   }
 
-  /* --- FOOTER MOBILE --- */
+  /* --- FOOTER MOBILE (Info Left, Map Right, Stats Bottom) --- */
   .site-footer {
-     padding-top: 20px !important;
-     padding-bottom: 80px !important; /* Space for nav bar */
+     padding: 15px 10px 10px 10px !important;
   }
 
   .footer-grid {
-    grid-template-columns: 1fr !important;
-    gap: 15px !important; /* Tighter gap */
-    text-align: center !important;
-  }
-
-  .footer-col-upper {
-    min-height: auto !important;
-    align-items: center !important;
-    margin-bottom: 10px !important; /* Reduced margin */
-  }
-
-  .footer-col-lower {
-    align-items: center !important;
-    margin-bottom: 15px !important; /* Reduced margin */
-  }
-
-  .footer-header-row {
-    flex-direction: column !important;
-    align-items: center !important;
-    text-align: center !important;
+    display: grid !important;
+    grid-template-columns: 1.4fr 0.6fr !important;
+    grid-template-areas:
+      "info map"
+      "center center" !important;
     gap: 5px !important;
-  }
-
-  .footer-logo {
-    width: 60px !important; /* Smaller logo */
-    margin-bottom: 5px;
-  }
-
-  .footer-title-block {
-    text-align: center;
-  }
-
-  .footer-title {
-    font-size: 20px !important; /* Smaller text */
+    text-align: left !important;
+    align-items: start !important;
   }
   
-  .footer-subtitle {
-     font-size: 14px !important;
+  /* --- Grid Area Assignments --- */
+  
+  .footer-col:first-child {
+    grid-area: info;
+    display: flex !important;
+    flex-direction: column !important;
+    padding-right: 2px !important;
+    gap: 5px !important; /* Space between Header and Address */
+  }
+  
+  /* Logo & Title Block (Header Row) */
+  .footer-col:first-child .footer-col-upper {
+    padding-right: 0 !important;
+    margin-bottom: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    width: 100% !important;
   }
 
-  .footer-heading {
+  /* Address Block (Now inside Left Column) */
+  .footer-col:first-child .footer-col-lower {
+    text-align: left !important;
+    justify-content: flex-start !important;
+    padding: 0 !important;
+    display: flex !important;
+    margin: 0 !important;
+    border: none !important;
+  }
+
+  .footer-col-right {
+    grid-area: map;
     text-align: center !important;
-    margin-bottom: 5px !important;
-    font-size: 16px !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    padding-left: 2px !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  
+  .footer-col-center {
+    grid-area: center;
+    text-align: center !important;
+    padding-top: 5px !important;
+    border: none !important;
+    margin-top: 0 !important;
+  }
+
+  /* --- Styles for Header Row (Logo + Title) --- */
+  .footer-col:first-child .footer-header-row {
+     flex-direction: row !important; /* Keep Side-by-Side */
+     align-items: flex-start !important; 
+     text-align: left !important;
+     gap: 5px !important;
+     margin-bottom: 0 !important;
+     width: 100% !important;
+  }
+  
+  .footer-col:first-child .footer-logo {
+     width: 35px !important;
+     align-self: flex-start !important;
+     margin-bottom: 0 !important;
+     margin-right: 2px !important;
+     margin-top: 0 !important;
+  }
+  
+  .footer-col:first-child .footer-title-block {
+     display: flex !important;
+     flex-direction: column !important;
+     justify-content: center !important;
+     padding-top: 2px !important;
+  }
+  
+  .footer-col:first-child .footer-title-block * {
+     text-align: left !important;
+     margin-top: 0 !important;
+  }
+  
+  .footer-title { 
+      font-size: 10px !important; 
+      line-height: 1.1 !important; 
+      margin-bottom: 0 !important;
+      margin-top: 0 !important;
+  } 
+  .footer-subtitle { font-size: 8px !important; }
+  
+  /* --- Styles for Address (Now Left Aligned) --- */
+  .footer-col:first-child .footer-address p {
+     text-align: left !important;
+     justify-content: flex-start !important; 
+     font-size: 10px !important;
+     line-height: 1.2 !important;
+     width: 100% !important;
+     margin: 0 !important;
+  }
+  
+  .footer-address img {
+      width: 10px !important;
+      margin-right: 4px !important;
+      margin-top: 2px !important;
+  }
+
+  /* --- Styles for Layout 3 (Map) --- */
+  .footer-col-right .footer-col-upper {
+      align-items: center !important; 
+      justify-content: center !important;
+      margin-bottom: 2px !important;
+      margin-top: 0 !important;
+      padding-top: 0 !important;
+      height: fit-content !important;
+  }
+  .footer-col-right .footer-col-lower {
+      align-items: center !important;
+      justify-content: center !important;
+      display: flex !important;
+      margin: 0 !important;
+  }
+  
+  .footer-col-right .footer-heading {
+      text-align: center !important;
+      font-size: 12px !important;
+      width: 100% !important;
+      margin-bottom: 2px !important;
+      margin-top: 0 !important;
+      line-height: 1 !important;
+      padding-top: 2px !important;
+      display: block !important;
+  }
+  .map-img {
+      max-width: 100% !important;
+      width: 85px !important; /* Keep compact */
+      height: auto !important;
+      align-self: center !important;
+  }
+
+  /* --- Styles for Layout 4 (Center Stats) --- */
+  .footer-col-center .footer-heading {
+      text-align: center !important; 
+      font-size: 14px !important;
+      margin-bottom: 5px !important;
+  }
+  
+  .icon-row {
+      justify-content: center !important;
+      gap: 15px !important;
+      margin-bottom: 5px !important;
+  }
+  
+  .visitor-stats {
+      justify-content: center !important;
+      margin-top: 0 !important;
+  }
+  
+  /* Reset spacings */
+  .footer-col-upper, .footer-col-lower {
+      min-height: 0 !important;
   }
   
   /* --- PAGE HEADER TITLES (Visi Misi / Profil) MOBILE --- */
