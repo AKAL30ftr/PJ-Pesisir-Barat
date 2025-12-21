@@ -600,6 +600,21 @@
     margin-bottom: 5px !important;
     font-size: 16px !important;
   }
+  
+  /* --- PAGE HEADER TITLES (Visi Misi / Profil) MOBILE --- */
+  .header-top {
+    padding-bottom: 60px !important; /* Extra padding to prevent text from hitting the curve */
+    align-items: flex-start !important; /* Align to top to handle multi-line better */
+  }
+
+  .section-title {
+    font-size: 18px !important; /* Smaller font to fit snugly */
+    max-width: 80% !important; /* Keep the constraints */
+    margin-left: auto !important;
+    margin-right: auto !important;
+    line-height: 1.4 !important;
+    margin-top: 5px !important; /* Slight adjustments */
+  }
 
   .icon-row {
     justify-content: center !important;

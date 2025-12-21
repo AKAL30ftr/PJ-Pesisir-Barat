@@ -302,7 +302,7 @@
 
 .dropdown-menu .nav-item {
   padding: 12px 20px;
-  text-align: left;
+  text-align: center; /* Centered text */
   border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 

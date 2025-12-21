@@ -48,6 +48,8 @@ body {
   padding: 16px 0 !important;
   width: 100%;
   display: block;
+  justify-content: center !important; /* Fix for when JS sets display:flex */
+  align-items: center !important;
 }
 
 /* Dropdown menu - fix untuk nested nav-item di dalam dropdown */
@@ -55,7 +57,7 @@ body {
   padding: 12px 20px !important;
   max-width: none !important;
   flex: none !important;
-  text-align: left !important;
+  text-align: center !important;
 }
 
 /* Ensure dropdown menu appears above all content */
